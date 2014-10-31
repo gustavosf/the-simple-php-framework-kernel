@@ -50,6 +50,18 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @covers Framework\View::set
+	 */
+	public function testSetter()
+	{
+		$view = View::forge('file');
+		$this->assertEquals([], $view->getData());
+
+		$view->set('foo', 'bar');
+		$this->assertEquals(['foo' => 'bar'], $view->getData());
+	}
+
+	/**
 	 * @covers Framework\View::render
 	 * @covers Framework\View::__toString
 	 * @covers Framework\View::file_resolver
