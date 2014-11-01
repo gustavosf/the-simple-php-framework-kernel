@@ -57,7 +57,7 @@ class Xml extends Database\Driver\Pdo {
 			return $match[1];
 		};
 		
-		# Foreach xml file in the given path we will load it into the database
+		# Foreach xml file in the given path we should load it into the database
 		foreach (glob($path.'/*.xml') as $file)
 		{ 
 			# Parse xml

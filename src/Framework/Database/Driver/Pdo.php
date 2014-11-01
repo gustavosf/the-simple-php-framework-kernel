@@ -59,14 +59,18 @@ class Pdo extends Database {
 	/* * Query resolving methods ******************************************* */
 	/* ********************************************************************* */
 
+	/**
+	 * Retrieve elements using the query
+	 *
+	 * @return array
+	 * @throws DatabaseException
+	 */
 	public function get()
 	{
 		$return = $this->query($this->mountQuery());
 		$this->_query_build = []; # resets query
 		return $return;
 	}
-
-	public function getOne() {}
 
 	/**
 	 * Mounts an SQL query string from query_build

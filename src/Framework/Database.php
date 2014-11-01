@@ -118,6 +118,11 @@ abstract class Database {
 	/* * Query building methods ******************************************** */
 	/* ********************************************************************* */
 
+	/**
+	 * Indicate the columns to be retrieved in a query
+	 *
+	 * @return $this
+	 */
 	public function select()
 	{
 		$this->_query_build['select'] = func_get_args();
@@ -126,12 +131,22 @@ abstract class Database {
 		return $this;
 	}
 
+	/**
+	 * Indicate with table should be queried for results
+	 *
+	 * @return $this
+	 */
 	public function from($table)
 	{
 		$this->_query_build['from'] = $table;
 		return $this;
 	}
 
+	/**
+	 * Indicate conditions to the query
+	 *
+	 * @return $this
+	 */
 	public function where()
 	{
 		$this->_query_build['where'][] = array_merge(['AND'], func_get_args());
@@ -142,6 +157,11 @@ abstract class Database {
 	/* * Query resolving methods ******************************************* */
 	/* ********************************************************************* */
 
+	/**
+	 * Retrieve elements using the query
+	 *
+	 * @return array
+	 * @throws DatabaseException
+	 */
 	abstract public function get();
-	abstract public function getOne();
 }
