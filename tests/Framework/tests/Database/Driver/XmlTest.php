@@ -7,8 +7,6 @@
  * @author  Gustavo Seganfredo
  */
 
-namespace Framework\Tests\Database\Driver;
-
 use Framework\Database;
 use PHPUnit_Framework_Assert as Assert;
 

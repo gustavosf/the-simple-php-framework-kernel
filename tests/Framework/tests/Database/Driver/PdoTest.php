@@ -7,11 +7,9 @@
  * @author  Gustavo Seganfredo
  */
 
-namespace Framework\Tests\Database\Driver;
-
+use \ReflectionClass;
 use Framework\Database;
 use PHPUnit_Framework_Assert as Assert;
-use ReflectionClass;
 
 /**
  * Database test cases.
