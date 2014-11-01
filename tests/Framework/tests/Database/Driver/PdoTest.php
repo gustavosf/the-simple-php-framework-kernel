@@ -164,6 +164,17 @@ class PdoTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @covers Framework\Database\Driver\Pdo::getOne
+	 */
+	public function testGetOne()
+	{
+		$instance = Database::instance();
+		
+		$return = $instance->select('id')->from('users')->where('id', '<=', 2)->getOne();
+		$this->assertEquals(['id' => '1'], $return);
+	}
+
+	/**
 	 * @covers Framework\Database\Driver\Pdo::get
 	 * @covers Framework\Database\Driver\Pdo::mountquery
 	 * @expectedException Framework\DatabaseException
