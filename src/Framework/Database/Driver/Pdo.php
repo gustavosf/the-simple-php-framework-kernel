@@ -73,6 +73,20 @@ class Pdo extends Database {
 	}
 
 	/**
+	 * Retrieve one element using the query
+	 *
+	 * @return array
+	 * @throws DatabaseException
+	 */
+	public function getOne()
+	{
+		$query = "{$this->mountQuery()} LIMIT 1";
+		$return = $this->query($query);
+		$this->_query_build = []; # resets query
+		return current($return);
+	}
+
+	/**
 	 * Mounts an SQL query string from query_build
 	 * 
 	 * @return string
