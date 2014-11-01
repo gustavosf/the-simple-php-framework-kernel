@@ -113,4 +113,54 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('User', current($users));
 	}
 
+	/**
+	 * @covers Framework\Model::offsetGet
+	 * @covers Framework\Model::__get
+	 * @covers Framework\Model::offsetSet
+	 * @covers Framework\Model::__set
+	 * @covers Framework\Model::offsetExists
+	 * @covers Framework\Model::__isset
+	 * @covers Framework\Model::offsetUnset
+	 * @covers Framework\Model::__unset
+	 */
+	public function testArrayAccess()
+	{
+		$user = User::find(1);
+		
+		# offsetGet
+		$this->assertEquals('Dalana', $user['name']);
+		$this->assertNull($user['invalid_property']);
+
+		# offsetSet
+		$user['name'] = 'Gustavo';
+		$this->assertEquals('Gustavo', $user['name']);
+
+		# offsetExists
+		$this->assertEquals(true, isset($user['name']));
+		$this->assertEquals(false, isset($user['invalid_property']));
+
+		# offsetUnset
+		unset($user['name']);
+		$this->assertEquals(false, isset($user['name']));
+	}
+
+	/**
+	 * @covers Framework\Model::current
+	 * @covers Framework\Model::key
+	 * @covers Framework\Model::next
+	 * @covers Framework\Model::rewind
+	 * @covers Framework\Model::valid
+	 */
+	public function testIterable()
+	{
+		$user = User::find(1);
+		
+		$this->assertEquals(1, $user->current());
+		$this->assertEquals('id', $user->key());
+
+		$user->next(); $this->assertEquals('name', $user->key());
+		$user->rewind(); $this->assertEquals('id', $user->key());
+		$this->assertTrue($user->valid());
+	}
+
 }

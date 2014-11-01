@@ -51,6 +51,10 @@ abstract class Database {
 	 */
 	protected $_query_build;
 
+	###########################################################################
+	###   Initializer   #######################################################
+	###########################################################################
+
 	/**
 	 * Sets global configuration for forthcoming instances
 	 * 
@@ -63,6 +67,24 @@ abstract class Database {
 		static::$instance = null;
 	}
 
+	###########################################################################
+	###   Constructor   #######################################################
+	###########################################################################
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param array $config Connection configuration
+	 */
+	protected function __construct($config)
+	{
+		$this->_config = $config;
+	}
+
+	###########################################################################
+	###   Instantiator   ######################################################
+	###########################################################################
+	
 	/**
 	 * Returns a database instance
 	 *
@@ -84,10 +106,6 @@ abstract class Database {
 		return static::$instance;
 	}
 
-	protected function __construct($config)
-	{
-		$this->_config = $config;
-	}
 
 	/**
 	 * Disconnect from the database if the object is destroyed
@@ -98,6 +116,11 @@ abstract class Database {
 	{
 		$this->disconnect();
 	}
+
+	###########################################################################
+	###   Abstract Methods                                         ############
+	###   Must be implemented by drivers that extends this class   ############
+	###########################################################################
 
 	/**
 	 * Connect to the database
@@ -114,9 +137,9 @@ abstract class Database {
 	 */
 	abstract public function disconnect();
 	
-	/* ********************************************************************* */
-	/* * Query building methods ******************************************** */
-	/* ********************************************************************* */
+	###########################################################################
+	###   Query Building Methods   ############################################
+	###########################################################################
 
 	/**
 	 * Indicate the columns to be retrieved in a query
@@ -153,9 +176,10 @@ abstract class Database {
 		return $this;
 	}
 
-	/* ********************************************************************* */
-	/* * Query resolving methods ******************************************* */
-	/* ********************************************************************* */
+	###########################################################################
+	###   Abstract Query Resolving Methods                         ############
+	###   Must be implemented by drivers that extends this class   ############
+	###########################################################################
 
 	/**
 	 * Retrieve elements using the query
