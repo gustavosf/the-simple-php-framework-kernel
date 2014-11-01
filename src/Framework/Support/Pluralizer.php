@@ -5,6 +5,7 @@ namespace Framework\Support;
 /**
  * Pluzarizer is part of Illuminate project
  * @see https://github.com/laravel/framework/blob/ca4dcef4e244ea282f6f2d6f8e40dede8fb6dff3/src/Illuminate/Support/Pluralizer.php
+ * @codeCoverageIgnore
  */
 class Pluralizer {
 

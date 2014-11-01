@@ -18,11 +18,12 @@ use PHPUnit_Framework_Assert as Assert;
 class XmlTest extends \PHPUnit_Framework_TestCase
 {
 
-	protected static $config = ['driver' => 'xml', 'path' => '/home/gust/Desktop/xmldb'];
-	
+	protected static $config;
+
 	public static function setUpBeforeClass()
 	{
-        Database::configure(static::$config);
+		static::$config = ['driver' => 'xml', 'path' => __DIR__.'/../../resources/xmldb'];
+		Database::configure(static::$config);
 	}
 
 	/**
