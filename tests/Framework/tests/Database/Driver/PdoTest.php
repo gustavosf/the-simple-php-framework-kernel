@@ -23,7 +23,7 @@ class PdoTest extends \PHPUnit_Framework_TestCase
 
 	public static function setUpBeforeClass()
 	{
-        Database::configure(static::$config);
+		Database::configure(static::$config);
 	}
 
 	protected function setUpData()
@@ -32,8 +32,8 @@ class PdoTest extends \PHPUnit_Framework_TestCase
 		$connection = Assert::readAttribute($instance, '_connection');
 		
 		# Sets up database
-        $connection->query('CREATE TABLE users (id int(13), name varchar(255), surname varchar(255))');
-        $connection->query('INSERT INTO users VALUES (1, "foo", "bar"), (2, "fee", "baz"), (3, "faz", "bee")');
+		$connection->query('CREATE TABLE users (id int(13), name varchar(255), surname varchar(255))');
+		$connection->query('INSERT INTO users VALUES (1, "foo", "bar"), (2, "fee", "baz"), (3, "faz", "bee")');
 	}
 
 	/**
@@ -161,6 +161,17 @@ class PdoTest extends \PHPUnit_Framework_TestCase
 
 		$return = $instance->get();
 		$this->assertEquals([['id' => '1', 'name' => 'foo', 'surname' => 'bar']], $return);
+	}
+
+	/**
+	 * @covers Framework\Database\Driver\Pdo::getOne
+	 */
+	public function testGetOne()
+	{
+		$instance = Database::instance();
+		
+		$return = $instance->select('id')->from('users')->where('id', '<=', 2)->getOne();
+		$this->assertEquals(['id' => '1'], $return);
 	}
 
 	/**

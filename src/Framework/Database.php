@@ -164,4 +164,12 @@ abstract class Database {
 	 * @throws DatabaseException
 	 */
 	abstract public function get();
+
+	/**
+	 * Retrieve one element using the query
+	 *
+	 * @return array
+	 * @throws DatabaseException
+	 */
+	abstract public function getOne();
 }
