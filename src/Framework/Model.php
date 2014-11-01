@@ -125,6 +125,26 @@ abstract class Model implements \ArrayAccess, \Iterator
 		return str_replace('\\', '', Str::snake(Str::plural(get_called_class())));
 	}
 
+	/**
+	 * Get a list of model's attributes
+	 * 
+	 * @return array
+	 */
+	public function getAttributes()
+	{
+		return array_keys($this->_data);
+	}
+
+	/**
+	 * Return this model as an array
+	 * 
+	 * @return array
+	 */
+	public function asArray()
+	{
+		return $this->_data;
+	}
+
 	###########################################################################
 	###   Getter & Setter via magic methods   #################################
 	###########################################################################
@@ -199,7 +219,7 @@ abstract class Model implements \ArrayAccess, \Iterator
 	}
 
 	###########################################################################
-	###   Implementation of Iterable   ########################################
+	###   Implementation of Iterator   ########################################
 	###########################################################################
 
 	public function rewind()

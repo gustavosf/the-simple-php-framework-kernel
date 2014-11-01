@@ -114,6 +114,27 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @covers Framework\Model::getAttributes
+	 */
+	public function testGetAttributes()
+	{
+		$user = User::find(1);
+		$this->assertEquals(['id', 'name', 'lastName', 'username', 'password', 'email', 'status'], $user->getAttributes());
+	}
+
+	/**
+	 * @covers Framework\Model::asArray
+	 */
+	public function testGetData()
+	{
+		$data = array_combine(
+			['id', 'name', 'lastName', 'username', 'password', 'email', 'status'],
+			['1', 'Dalana', 'Jenkins', 'dalana', 'asdf', 'dalana@inmemorian.com', '1']);
+		$user = User::find(1);
+		$this->assertEquals($data, $user->asArray());
+	}
+
+	/**
 	 * @covers Framework\Model::offsetGet
 	 * @covers Framework\Model::__get
 	 * @covers Framework\Model::offsetSet
