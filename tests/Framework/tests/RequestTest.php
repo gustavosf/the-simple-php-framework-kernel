@@ -152,7 +152,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(80, $request->server->SERVER_PORT);
 		$this->assertEquals('test.com', $request->server->HTTP_HOST);
 		$this->assertEquals('username', $request->server->PHP_AUTH_USER);
-		$this->assertEquals('', $request->server->PHP_AUTH_PW);
+		$this->assertEquals('', @$request->server->PHP_AUTH_PW);
 
 		$request = Request::create('http://test.com/?foo');
 		$this->assertEquals('/?foo', $request->server->REQUEST_URI);

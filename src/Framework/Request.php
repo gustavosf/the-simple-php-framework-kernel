@@ -209,7 +209,7 @@ class Request
 	 */
 	public function getUri()
 	{
-		$uri = $this->server->HTTPS ? "https" : "http";
+		$uri = isset($this->server->HTTPS) ? "https" : "http";
 		$uri = "{$uri}://{$this->server->HTTP_HOST}";
 		$uri = "{$uri}{$this->server->REQUEST_URI}";
 		return $uri;

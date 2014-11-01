@@ -69,15 +69,15 @@ abstract class Database {
 	 * @return Database
 	 * @throws \Exception
 	 */
-	final public static function instance()
+	final public static function &instance()
 	{
 		if (static::$instance === null)
 		{
-			if (!isset(static::$config['type']))
-				throw new DatabaseException('Database type not defined');
+			if (!isset(static::$config['driver']))
+				throw new DatabaseException('Database driver not defined');
 
 			# Create an instance using the respective driver
-			$driver = 'Framework\Database_Driver_'.ucfirst(static::$config['type']);
+			$driver = 'Framework\Database\Driver\\'.ucfirst(static::$config['driver']);
 			static::$instance = new $driver(static::$config);
 		}
 
@@ -121,6 +121,8 @@ abstract class Database {
 	public function select()
 	{
 		$this->_query_build['select'] = func_get_args();
+		unset($this->_query_build['where']);
+		unset($this->_query_build['from']);
 		return $this;
 	}
 
@@ -132,7 +134,7 @@ abstract class Database {
 
 	public function where()
 	{
-		$this->_query_build['where'][] = array_merge(['and'], func_get_args());
+		$this->_query_build['where'][] = array_merge(['AND'], func_get_args());
 		return $this;
 	}
 
@@ -143,8 +145,3 @@ abstract class Database {
 	abstract public function get();
 	abstract public function getOne();
 }
-
-/**
- * Database Exception
- */
-class DatabaseException extends \Exception {}

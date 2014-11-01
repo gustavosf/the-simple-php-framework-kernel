@@ -7,12 +7,14 @@
  * @author  Gustavo Seganfredo
  */
 
-namespace Framework;
+namespace Framework\Database\Driver;
+use Framework\Database;
+use Framework\DatabaseException;
 
 /**
  * Database Driver for PDO
  */
-class Database_Driver_Pdo extends Database {
+class Pdo extends Database {
 	
 	/**
 	 * Connect to the database
@@ -35,10 +37,6 @@ class Database_Driver_Pdo extends Database {
 			$this->_connection = new \PDO(
 				$config['dsn'], $config['username'], $config['password'],
 				[\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
-			if (isset($config['charset']))
-			{
-				$this->_connection->setCharset($config['charset']);
-			}
 		}
 		catch (\PDOException $e)
 		{
@@ -63,7 +61,9 @@ class Database_Driver_Pdo extends Database {
 
 	public function get()
 	{
-		return $this->query($this->mountQuery());
+		$return = $this->query($this->mountQuery());
+		$this->_query_build = []; # resets query
+		return $return;
 	}
 
 	public function getOne() {}
@@ -112,6 +112,8 @@ class Database_Driver_Pdo extends Database {
 	 * @return array   Result list for SELECT queries
 	 * @return integer Row count for INSERT queries
 	 * @return integer Number of affected rows otherwise
+	 * 
+	 * @todo Implement return for other types of queries (insert, update, delete...)
 	 */
 	private function query($sql)
 	{
@@ -127,8 +129,10 @@ class Database_Driver_Pdo extends Database {
 			throw new DatabaseException("{$e->getMessage()} with query \"{$sql}\"", $ecode, $e);
 		}
 
-		if (preg_match('/^select/i', $sql)) return $result->fetchAll(/*\PDO::FETCH_ASSOC*/);
-		elseif (preg_match('/^insert/i', $sql)) return $this->_connection->lastInsertId();
-		else return $result->errorCode() !== '00000' ? -1 : $result->rowCount();
+		return $result->fetchAll(\PDO::FETCH_ASSOC);
+
+		// if (preg_match('/^select/i', $sql)) return $result->fetchAll(\PDO::FETCH_ASSOC);
+		// elseif (preg_match('/^insert/i', $sql)) return $this->_connection->lastInsertId();
+		// else return $result->errorCode() !== '00000' ? -1 : $result->rowCount();
 	}
 }
