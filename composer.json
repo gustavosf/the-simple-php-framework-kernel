@@ -1,0 +1,21 @@
+{
+    "name": "gustavosf/the-simple-php-framework",
+    "type": "library",
+    "description": "The Simple PHP Framework",
+    "keywords": [],
+    "homepage": "http://gustavo.seganfredo.net",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gustavo Seganfredo",
+            "email": "gustavosf@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Framework\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<accountList>
+<account id="1" owner_id="1" revenue="12345"/>
+<account id="2" owner_id="4" revenue="1000000000"/>
+<account id="3" owner_id="7" revenue="0"/>
+<account id="4" owner_id="9" revenue="15"/>
+</accountList>
