@@ -21,7 +21,11 @@ class Application {
 	 * 
 	 * @var array
 	 */
-	protected $routes = ['get' => [], 'post' => []];
+	protected $routes = [
+		'get'   => [], 
+		'post'  => [],
+		'error' => []
+	];
 
 	/**
 	 * List of paths for this apps

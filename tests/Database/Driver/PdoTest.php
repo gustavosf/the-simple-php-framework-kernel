@@ -31,7 +31,9 @@ class PdoTest extends \PHPUnit_Framework_TestCase
 		
 		# Sets up database
 		$connection->query('CREATE TABLE users (id int(13), name varchar(255), surname varchar(255))');
-		$connection->query('INSERT INTO users VALUES (1, "foo", "bar"), (2, "fee", "baz"), (3, "faz", "bee")');
+		$connection->query('INSERT INTO users VALUES ("1", "foo", "bar")');
+		$connection->query('INSERT INTO users VALUES ("2", "fee", "baz")');
+		$connection->query('INSERT INTO users VALUES ("3", "faz", "bee")');
 	}
 
 	/**

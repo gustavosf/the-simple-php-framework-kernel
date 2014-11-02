@@ -122,7 +122,8 @@ abstract class Model implements \ArrayAccess, \Iterator
 		if (static::$_table) return static::$_table;
 
 		# Otherwise, use convention over configuration
-		$classname = end(explode('\\', get_called_class()));
+		$classname = explode('\\', get_called_class());
+		$classname = end($classname);
 		return str_replace('\\', '', Str::snake(Str::plural($classname)));
 	}
 
