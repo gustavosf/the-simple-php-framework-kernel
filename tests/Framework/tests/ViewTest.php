@@ -7,13 +7,26 @@
  * @author  Gustavo Seganfredo
  */
 
+use \ReflectionClass;
 use Framework\View;
+use Framework\ViewNotFoundException;
+use PHPUnit_Framework_Assert as Assert;
 
 /**
  * View test cases.
  */
 class ViewTest extends \PHPUnit_Framework_TestCase
 {
+
+	/**
+	 * @covers Framework\View::configure
+	 */
+	public function testConfigure()
+	{
+		View::configure(['path' => __DIR__.'/resources']);
+		$this->assertEquals(['path' => __DIR__.'/resources'],
+			Assert::readAttribute('Framework\View', 'config'));
+	}
 
 	/**
 	 * @covers Framework\View::__construct
@@ -60,13 +73,39 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @covers Framework\View::fileResolver
+	 */
+	public function testFileResolver()
+	{
+		$reflection = new ReflectionClass('Framework\View');
+		$method = $reflection->getMethod('fileResolver');
+		$method->setAccessible(true);
+
+		$this->assertEquals(__DIR__.'/resources/view.php',
+			$method->invokeArgs(View::forge('view.php'), []));
+
+		$this->assertEquals(__DIR__.'/resources/view.php',
+			$method->invokeArgs(View::forge('view'), []));
+
+		try
+		{
+			$method->invokeArgs(View::forge('invalid_file'), []);
+			$this->assertTrue(false);
+		}
+		catch (ViewNotFoundException $e)
+		{
+			$this->assertTrue(true);
+		}
+
+	}
+
+	/**
 	 * @covers Framework\View::render
 	 * @covers Framework\View::__toString
-	 * @covers Framework\View::file_resolver
 	 */
 	public function testRender()
 	{
-		$view = View::forge(__DIR__.'/resources/view.php', ['val' => '456']);
+		$view = View::forge('view.php', ['val' => '456']);
 		$this->assertEquals('123456789', $view->render());
 		$this->assertEquals('123456789', (string)$view);
 	}
@@ -74,7 +113,6 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @covers Framework\View::render
 	 * @covers Framework\View::__toString
-	 * @covers Framework\View::file_resolver
 	 * @expectedException Framework\ViewNotFoundException
 	 */
 	public function testRenderViewNotFound()
@@ -89,12 +127,11 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @covers Framework\View::render
 	 * @covers Framework\View::__toString
-	 * @covers Framework\View::file_resolver
 	 * @expectedException \Exception
 	 */
 	public function testRenderException()
 	{
-		$view = View::forge(__DIR__.'/resources/exceptional_view.php');
+		$view = View::forge('exceptional_view.php');
 		$view->render(); # Should throw an Exception
 	}
 

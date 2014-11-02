@@ -34,6 +34,13 @@ class View {
 	 */
 	protected $data;
 
+	/**
+	 * Component configuration
+	 * 
+	 * @var array
+	 */
+	protected static $config = ['path' => '.'];
+
 	###########################################################################
 	###   Constructor   #######################################################
 	###########################################################################
@@ -92,8 +99,8 @@ class View {
 			return ob_get_clean();
 		};
 
-		$file = $this->file_resolver($this->file);
-		return $sterilized_room($this->file, $this->data);
+		$file = $this->fileResolver($this->file);
+		return $sterilized_room($file, $this->data);
 	}
 
 	/**
@@ -153,6 +160,17 @@ class View {
 		$this->data[$parameter] = $data;
 	}
 
+	/**
+	 * Sets configuration for the view component
+	 * 
+	 * @param  array $config
+	 * @return void
+	 */
+	public static function configure($config)
+	{
+		static::$config = $config;
+	}
+
 	###########################################################################
 	###   Helper Methods   ####################################################
 	###########################################################################
@@ -165,13 +183,11 @@ class View {
 	 * @return string real file path
 	 * @todo Handle template engines (twig, etc)
 	 */
-	protected function file_resolver()
+	protected function fileResolver()
 	{
-		if (file_exists($this->file)) return $this->file;
-		if (file_exists($this->file.'.php')) return "{$this->file}.php";
-		if (file_exists(__DIR__.'/'.$this->file)) return __DIR__."/{$this->file}";
-		if (file_exists(__DIR__.'/'.$this->file.'.php')) return __DIR__."/{$this->file}.php";
-
+		$path = static::$config['path'].'/'.$this->file;
+		if (file_exists($path)) return $path;
+		if (file_exists($path.'.php')) return "{$path}.php";
 		throw new ViewNotFoundException;
 	}
 }
