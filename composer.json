@@ -1,7 +1,7 @@
 {
-    "name": "gustavosf/the-simple-php-framework",
+    "name": "gustavosf/the-simple-php-framework-kernel",
     "type": "library",
-    "description": "The Simple PHP Framework",
+    "description": "The Simple PHP Framework Kernel",
     "keywords": [],
     "homepage": "http://gustavo.seganfredo.net",
     "license": "MIT",
@@ -12,10 +12,15 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Framework\\": "src/" }
+        "psr-4": { 
+            "Framework\\": "src/Framework/" 
+        }
     },
     "require": {
         "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
     },
     "minimum-stability": "dev"
 }
