@@ -125,7 +125,9 @@ class Application {
 		elseif ($req->server->REQUEST_METHOD == 'POST') $routes = $this->routes['post'];
 		else $routes = [];
 
-		$route = $this->matchRoute($req->server->PATH_INFO, $routes);
+		$path = preg_replace('/\/[^\/]+.php$/', '', $req->server->PHP_SELF);
+		$resource = str_replace($path, '', $req->server->REQUEST_URI);
+		$route = $this->matchRoute($resource, $routes);
 
 		if ($route === null) throw new HttpNotFoundException;
 		return call_user_func_array($route[0], $route[1]);
