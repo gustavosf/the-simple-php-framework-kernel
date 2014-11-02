@@ -12,7 +12,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Framework": "src/" }
+        "psr-4": { "Framework\\": "src/" }
     },
     "require": {
         "php": ">=5.4.0"

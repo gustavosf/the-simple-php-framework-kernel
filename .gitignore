@@ -1,7 +1,2 @@
 vendor/
 composer.lock
-phpunit.xml
-
-
-lala.php
-view.php
