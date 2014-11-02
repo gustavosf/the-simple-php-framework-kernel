@@ -130,7 +130,11 @@ class Application {
 		else $routes = [];
 
 		$path = preg_replace('/\/[^\/]+.php$/', '', $req->server->SCRIPT_NAME);
-		$resource = str_replace($path, '', $req->server->REQUEST_URI);
+		if ($path != $req->server->SCRIPT_NAME)
+			$resource = str_replace($path, '', $req->server->REQUEST_URI);
+		else
+			$resource = $req->server->REQUEST_URI;
+		
 		$route = $this->matchRoute($resource, $routes);
 
 		if ($route === null) throw new HttpNotFoundException;
