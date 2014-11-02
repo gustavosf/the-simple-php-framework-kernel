@@ -7,8 +7,6 @@
  * @author  Gustavo Seganfredo
  */
 
-namespace Framework\Tests;
-
 use Framework\View;
 
 /**

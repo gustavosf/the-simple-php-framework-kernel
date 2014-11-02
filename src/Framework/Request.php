@@ -17,7 +17,6 @@ namespace Framework;
  */
 class Request
 {
-
 	/**
 	 * GET parameters ($_GET)
 	 * 
@@ -60,6 +59,9 @@ class Request
 	 */
 	public $content;
 
+	###########################################################################
+	###   Constructor   #######################################################
+	###########################################################################
 
 	 /**
      * Constructor.
@@ -202,6 +204,10 @@ class Request
 		return new self($query, $request, $cookies, $files, $server, $content);
 	}
 
+	###########################################################################
+	###   Helpers   ###########################################################
+	###########################################################################
+	
 	/**
 	 * Generates a normalized URI (URL) for the Request.
 	 * 
@@ -209,7 +215,7 @@ class Request
 	 */
 	public function getUri()
 	{
-		$uri = $this->server->HTTPS ? "https" : "http";
+		$uri = isset($this->server->HTTPS) ? "https" : "http";
 		$uri = "{$uri}://{$this->server->HTTP_HOST}";
 		$uri = "{$uri}{$this->server->REQUEST_URI}";
 		return $uri;
