@@ -21,7 +21,11 @@ class Application {
 	 * 
 	 * @var array
 	 */
-	protected $routes = ['get' => [], 'post' => []];
+	protected $routes = [
+		'get'   => [], 
+		'post'  => [],
+		'error' => []
+	];
 
 	/**
 	 * List of paths for this apps
@@ -125,7 +129,7 @@ class Application {
 		elseif ($req->server->REQUEST_METHOD == 'POST') $routes = $this->routes['post'];
 		else $routes = [];
 
-		$path = preg_replace('/\/[^\/]+.php$/', '', $req->server->PHP_SELF);
+		$path = preg_replace('/\/[^\/]+.php$/', '', $req->server->SCRIPT_NAME);
 		$resource = str_replace($path, '', $req->server->REQUEST_URI);
 		$route = $this->matchRoute($resource, $routes);
 
